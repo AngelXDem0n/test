@@ -1,128 +1,50 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-   <title>Angels Beloved Website</title>
-</head>
-<body>
-    <div class="container">
-        <h1>🎲 RANDOM.IO</h1>
-        <p class="subtitle">Your source of beautiful randomness</p>
+<!DOCTYPE HTML>
+/* Reset some default margins */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
 
-        <div class="card-grid">
-            <!-- Random Number Card -->
-            <div class="card">
-                <h2>
-                    <span class="icon">🔢</span> Random Number
-                </h2>
-                <div class="display-area" id="numberDisplay">42</div>
-                <div style="display: flex; gap: 10px; align-items: center; justify-content: center; flex-wrap: wrap;">
-                    <input type="number" id="minRange" value="1" placeholder="Min" style="width: 80px; padding: 8px; border-radius: 8px; border: none; background: rgba(255,255,255,0.2); color: white; text-align: center;">
-                    <span style="font-size: 1.2rem;">to</span>
-                    <input type="number" id="maxRange" value="100" placeholder="Max" style="width: 80px; padding: 8px; border-radius: 8px; border: none; background: rgba(255,255,255,0.2); color: white; text-align: center;">
-                </div>
-                <button onclick="generateRandomNumber()" style="margin-top: 15px;">Generate Number</button>
-            </div>
+header {
+  background: #333;
+  color: white;
+  padding: 20px;
+  text-align: center;
+}
 
-            <!-- Random Color Card -->
-            <div class="card">
-                <h2>
-                    <span class="icon">🎨</span> Random Color
-                </h2>
-                <div class="display-area color-display" id="colorDisplay" style="background: #3b82f6;">#3B82F6</div>
-                <div style="display: flex; gap: 10px; justify-content: center; margin-top: 15px;">
-                    <div id="colorPreview" style="width: 40px; height: 40px; border-radius: 50%; background: #3b82f6; border: 2px solid white;"></div>
-                </div>
-                <button onclick="generateRandomColor()" style="margin-top: 10px;">Generate Color</button>
-            </div>
+nav a {
+  color: white;
+  margin: 0 15px;
+  text-decoration: none;
+}
 
-            <!-- Random Quote Card -->
-            <div class="card">
-                <h2>
-                    <span class="icon">💬</span> Random Quote
-                </h2>
-                <div class="display-area quote-display" id="quoteDisplay">"The only limit to our realization of tomorrow is our doubts of today."</div>
-                <button onclick="generateRandomQuote()" style="margin-top: 15px;">New Quote</button>
-            </div>
-        </div>
+nav a:hover {
+  text-decoration: underline;
+}
 
-        <button class="global-random-btn" onclick="generateAllRandom()">✨ Generate All Random ✨</button>
+main {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 20px;
+  gap: 30px;
+}
 
-        <footer>
-            <p>Randomness made beautiful • Refresh for more</p>
-        </footer>
-    </div>
+article {
+  flex: 2; /* takes 2/3 of space */
+  background: #f4f4f4;
+  padding: 20px;
+}
 
-    <script>
-        // ---- Random Number ----
-        function generateRandomNumber() {
-            const min = parseInt(document.getElementById('minRange').value) || 1;
-            const max = parseInt(document.getElementById('maxRange').value) || 100;
-            const minVal = Math.min(min, max);
-            const maxVal = Math.max(min, max);
-            const randomNum = Math.floor(Math.random() * (maxVal - minVal + 1)) + minVal;
-            const display = document.getElementById('numberDisplay');
-            display.textContent = randomNum;
-            // quick animation
-            display.style.transform = 'scale(1.1)';
-            setTimeout(() => { display.style.transform = 'scale(1)'; }, 150);
-        }
+aside {
+  flex: 1; /* takes 1/3 */
+  background: #ffffff;
+  padding: 16px;
+}
 
-        // ---- Random Color ----
-        function generateRandomColor() {
-            const letters = '0123456789ABCDEF';
-            let color = '#';
-            for (let i = 0; i < 6; i++) {
-                color += letters[Math.floor(Math.random() * 16)];
-            }
-            document.getElementById('colorDisplay').textContent = color;
-            document.getElementById('colorDisplay').style.background = color;
-            document.getElementById('colorPreview').style.background = color;
-            // change text color based on brightness
-            const hex = color.replace('#', '');
-            const r = parseInt(hex.substring(0, 2), 16);
-            const g = parseInt(hex.substring(2, 4), 16);
-            const b = parseInt(hex.substring(4, 6), 16);
-            const brightness = (r * 299 + g * 587 + b * 114) / 1000;
-            document.getElementById('colorDisplay').style.color = brightness > 128 ? '#000' : '#fff';
-        }
-
-        // ---- Random Quote ----
-        const quotes = [
-            { text: "The only limit to our realization of tomorrow is our doubts of today.", author: "Franklin D. Roosevelt" },
-            { text: "In the middle of every difficulty lies opportunity.", author: "Albert Einstein" },
-            { text: "Do what you can, with what you have, where you are.", author: "Theodore Roosevelt" },
-            { text: "It does not matter how slowly you go as long as you do not stop.", author: "Confucius" },
-            { text: "Everything you’ve ever wanted is on the other side of fear.", author: "George Addair" },
-            { text: "The best time to plant a tree was 20 years ago. The second best time is now.", author: "Chinese Proverb" },
-            { text: "Your time is limited, so don’t waste it living someone else’s life.", author: "Steve Jobs" },
-            { text: "The future belongs to those who believe in the beauty of their dreams.", author: "Eleanor Roosevelt" },
-            { text: "Strive not to be a success, but rather to be of value.", author: "Albert Einstein" },
-            { text: "It always seems impossible until it’s done.", author: "Nelson Mandela" },
-            { text: "Act as if what you do makes a difference. It does.", author: "William James" },
-            { text: "Success is not final, failure is not fatal: it is the courage to continue that counts.", author: "Winston Churchill" },
-            { text: "What lies behind us and what lies before us are tiny matters compared to what lies within us.", author: "Ralph Waldo Emerson" },
-            { text: "Believe you can and you're halfway there.", author: "Theodore Roosevelt" }
-        ];
-
-        function generateRandomQuote() {
-            const randomIndex = Math.floor(Math.random() * quotes.length);
-            const quote = quotes[randomIndex];
-            document.getElementById('quoteDisplay').textContent = `"${quote.text}" — ${quote.author}`;
-        }
-
-        // ---- Generate all at once ----
-        function generateAllRandom() {
-            generateRandomNumber();
-            generateRandomColor();
-            generateRandomQuote();
-        }
-
-        // Initialize with some random values on page load
-        window.onload = function() {
-            generateRandomNumber();
-            generateRandomColor();
-            generateRandomQuote();
-        };
-    </script>
-</body>
-</html>
+footer {
+  background: #333;
+  color: white;
+  text-align: center;
+  padding: 10px;
+  margin-top: 20px;
+}
